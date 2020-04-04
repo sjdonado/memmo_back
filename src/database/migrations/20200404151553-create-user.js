@@ -6,6 +6,11 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
+    phone: {
+      allowNull: false,
+      unique: true,
+      type: Sequelize.STRING,
+    },
     dni: {
       type: Sequelize.STRING,
     },

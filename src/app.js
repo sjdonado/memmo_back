@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const models = require('./database/models');
-// const routes = require('./routes/v1');
+const routes = require('./routes');
 
 models.sequelize.authenticate();
 models.sequelize.sync();
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-// app.use('/v1', api);
+app.use('/v1', routes);
 
 app.use((req, res, next) => {
   res.status(404);
