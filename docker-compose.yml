@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  api:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      APP_SECRET: BC372233C314E4BD5BC5892ECB311
+      DATABASE_URL: postgres://cuidapp_user:root_12345@db:5432/cuidapp
+      TWILIO_ACCOUNT_SID:
+      TWILIO_AUTH_TOKEN:
+      TWILIO_SERVICE_VERIFY_SID:
+      TWILIO_SERVICE_NOTIFICATION_SID:
+      TWILIO_PHONE_NUMBER:
+    ports:
+      - 4000:4000
+      - 9229:9229
+    depends_on:
+      - db
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@cuidapp.co
+  #     PGADMIN_DEFAULT_PASSWORD: root_12345
+  #   ports:
+  #     - 5431:80
+  #   depends_on:
+  #     - db
+  db:
+    restart: unless-stopped
+    image: postgres:12.0-alpine
+    environment:
+      POSTGRES_DB: cuidapp
+      POSTGRES_USER: cuidapp_user
+      POSTGRES_PASSWORD: root_12345
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  
+volumes:
+  postgres: ~
