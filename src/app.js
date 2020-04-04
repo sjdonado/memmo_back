@@ -27,9 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const {
-    statusCode = 500, message,
-  } = err;
+  const { statusCode = 500, message } = err;
 
   console.error(err);
 

@@ -1,5 +1,8 @@
 const { User } = require('../database/models');
-const { sendVerificationTokenToPhone, checkVerificationToken } = require('../services/twilio');
+const {
+  sendVerificationTokenToPhone,
+  checkVerificationToken,
+} = require('../services/twilio');
 const { signToken } = require('../services/auth');
 
 const sendPhoneCode = ({ body }, res, next) => {

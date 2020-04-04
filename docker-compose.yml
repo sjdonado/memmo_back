@@ -11,6 +11,7 @@ services:
       - .:/usr/src/app
     environment:
       NODE_ENV: development
+      HOSTNAME: 0.0.0.0
       PORT: 3000
       APP_SECRET: BC372233C314E4BD5BC5892ECB311
       DATABASE_URL: postgres://memmo_user:root_12345@db:5432/memmo
@@ -19,8 +20,9 @@ services:
       TWILIO_SERVICE_VERIFY_SID:
       TWILIO_SERVICE_NOTIFICATION_SID:
       TWILIO_PHONE_NUMBER:
+      FIREBASE_PROJECT_ID:
     ports:
-      - 4000:4000
+      - 3000:3000
       - 9229:9229
     depends_on:
       - db
@@ -42,6 +44,6 @@ services:
       POSTGRES_PASSWORD: root_12345
     volumes:
       - postgres:/var/lib/postgresql/data
-  
+
 volumes:
   postgres: ~

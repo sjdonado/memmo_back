@@ -1,5 +1,6 @@
 module.exports = {
   server: {
+    hostname: process.env.HOSTNAME,
     port: process.env.PORT,
     secret: process.env.APP_SECRET,
     pagination: {
@@ -12,5 +13,8 @@ module.exports = {
     serviceVerifySid: process.env.TWILIO_SERVICE_VERIFY_SID,
     serviceNotificationSid: process.env.TWILIO_SERVICE_NOTIFICATION_SID,
     phoneNumber: process.env.TWILIO_PHONE_NUMBER,
+  },
+  firebase: {
+    projectID: process.env.FIREBASE_PROJECT_ID,
   },
 };
