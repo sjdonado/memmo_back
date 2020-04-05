@@ -13,28 +13,28 @@ services:
       NODE_ENV: development
       HOSTNAME: 0.0.0.0
       PORT: 3000
-      APP_SECRET: BC372233C314E4BD5BC5892ECB311
+      APP_SECRET:
       DATABASE_URL: postgres://memmo_user:root_12345@db:5432/memmo
       TWILIO_ACCOUNT_SID:
       TWILIO_AUTH_TOKEN:
       TWILIO_SERVICE_VERIFY_SID:
       TWILIO_SERVICE_NOTIFICATION_SID:
       TWILIO_PHONE_NUMBER:
+      FIREBASE_TYPE:
       FIREBASE_PROJECT_ID:
+      FIREBASE_PRIVATE_KEY_ID:
+      FIREBASE_PRIVATE_KEY:
+      FIREBASE_CLIENT_EMAIL:
+      FIREBASE_CLIENT_ID:
+      FIREBASE_AUTH_URI:
+      FIREBASE_TOKEN_URI:
+      FIREBASE_AUTH_PROVIDER_X509_CERT_URL:
+      FIREBASE_CLIENT_X509_CERT_URL:
     ports:
       - 3000:3000
       - 9229:9229
     depends_on:
       - db
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@memmo.co
-  #     PGADMIN_DEFAULT_PASSWORD: root_12345
-  #   ports:
-  #     - 5431:80
-  #   depends_on:
-  #     - db
   db:
     restart: unless-stopped
     image: postgres:12.0-alpine
@@ -42,6 +42,8 @@ services:
       POSTGRES_DB: memmo
       POSTGRES_USER: memmo_user
       POSTGRES_PASSWORD: root_12345
+    ports:
+      - 5432:5432
     volumes:
       - postgres:/var/lib/postgresql/data
 

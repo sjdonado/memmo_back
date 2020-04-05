@@ -16,7 +16,7 @@ module.exports = {
       date: {
         type: Sequelize.DATE,
       },
-      OwnerId: {
+      firstUserId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
@@ -25,7 +25,7 @@ module.exports = {
           key: 'id',
         },
       },
-      UserId: {
+      secondUserId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         allowNull: false,
@@ -44,7 +44,7 @@ module.exports = {
       },
     });
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable('interactions');
   },
 };

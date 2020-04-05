@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
   );
   Interaction.associate = (models) => {
     Interaction.belongsTo(models.User, {
-      as: 'owner',
+      as: 'firstUser',
       foreignKey: {
-        name: 'OwnerId',
+        name: 'firstUserId',
         allowNull: false,
       },
     });
     Interaction.belongsTo(models.User, {
-      as: 'user',
+      as: 'secondUser',
       foreignKey: {
-        name: 'UserId',
+        name: 'secondUserId',
         allowNull: false,
       },
     });

@@ -1,7 +1,9 @@
-const { User } = require('../database/models');
+const moment = require('moment');
+const { User, Interaction } = require('../database/models');
 const {
   sendVerificationTokenToPhone,
   checkVerificationToken,
+  sendCustomSMS,
 } = require('../services/twilio');
 const { signToken } = require('../services/auth');
 const { ACCOUNT_STATUSES } = require('../utils/enums');
@@ -62,8 +64,55 @@ const login = async ({ user, body }, res, next) => {
   }
 };
 
+const updateStatusToPositive = async ({ params }, res, next) => {
+  try {
+    const { id } = params;
+    const user = await User.findByPk(id);
+    const interactions = await Interaction.findAll({
+      where: {
+        $or: [
+          {
+            firstUserId: {
+              $eq: id,
+            },
+          },
+          {
+            secondUserId: {
+              $eq: id,
+            },
+          },
+        ],
+      },
+      individualHooks: true,
+    });
+    const body =
+      'Memmo: Ha marcado positivo una persona que ha estado a menos de 2 metros de ti en los úlitmos 14 días, favor tomar las precauciones pertinentes.';
+    await Promise.all(
+      interactions.map(async (interaction) => {
+        let phone;
+        if (moment().diff(interaction.date, 'days') >= 14) {
+          if (interaction.firstUser.id === id) {
+            phone = interaction.secondUser.phone;
+          }
+          if (interaction.secondUser.id === id) {
+            phone = interaction.firstUser.phone;
+          }
+          await sendCustomSMS(phone, body);
+        }
+      })
+    );
+    await user.update({
+      status: ACCOUNT_STATUSES[2],
+    });
+    res.json(interactions);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   sendPhoneCode,
   checkPhoneCode,
   login,
+  updateStatusToPositive,
 };

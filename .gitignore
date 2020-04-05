@@ -115,4 +115,3 @@ dist
 .pnp.*
 
 docker-compose.yml
-service_account.json
