@@ -15,7 +15,7 @@ We will collect the geolocation of each user (4am - 10pm). When new cases of COV
 - Node.js web server using [Express.js](https://npm.im/express)
 - Basic web user interface using [Handlebars](https://npm.im/express-handlebars) for templating and Bootstrap for UI
 - Unit tests using [`mocha`](https://npm.im/mocha) and [`chai`](https://npm.im/chai)
-- Running using Docker compose [Docker](https://www.cypress.io/)
+- Running using containers with [Docker](https://www.cypress.io/)
 - [Automated CI testing using GitHub Actions](/.github/workflows/nodejs.yml)
 - Linting and formatting using [ESLint](https://npm.im/eslint) and [Prettier](https://npm.im/prettier)
 
@@ -23,14 +23,13 @@ We will collect the geolocation of each user (4am - 10pm). When new cases of COV
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- A Google Cloud Platform account - [more info](https://cloud.google.com)
 - A Twilio account - [sign up](https://www.twilio.com/try-twilio)
 
 ### Twilio Account Settings
 
-This application should give you a ready-made starting point for writing your
-own appointment reminder application. Before we begin, we need to collect
-all the config values we need to run the application:
+Before we begin, we need to collect all the config values we need to run the application:
 
 | Config&nbsp;Value | Description                                                                                                                                                  |
 | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |

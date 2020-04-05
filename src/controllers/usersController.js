@@ -4,11 +4,12 @@ const {
   checkVerificationToken,
 } = require('../services/twilio');
 const { signToken } = require('../services/auth');
+const { ACCOUNT_STATUSES } = require('../utils/enums');
 
-const sendPhoneCode = ({ body }, res, next) => {
+const sendPhoneCode = async ({ body }, res, next) => {
   try {
     const { phone } = body;
-    const status = sendVerificationTokenToPhone(phone);
+    const status = await sendVerificationTokenToPhone(phone);
     res.json({
       status,
     });
@@ -46,12 +47,15 @@ const checkPhoneCode = async ({ body }, res, next) => {
 
 const login = async ({ user, body }, res, next) => {
   try {
-    const { dni } = body;
-    if (!dni) {
-      await user.update({
-        dni,
-      });
-    }
+    const { firstName, lastName, dniType, dni } = body;
+    await user.update({
+      status: ACCOUNT_STATUSES[1],
+      firstName,
+      lastName,
+      dniType,
+      dni,
+    });
+
     res.json(user);
   } catch (err) {
     next(err);

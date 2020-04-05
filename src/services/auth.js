@@ -37,22 +37,42 @@ const decodeToken = (token) =>
  * @param {String} userId
  */
 const authentication = async (req, res, next) => {
-  const token = req.headers['x-access-token'] || req.headers.authorization;
-  const parsedToken =
-    token && token.includes('Bearer ') ? token.substring(7) : token;
+  try {
+    const token = req.headers['x-access-token'] || req.headers.authorization;
+    const parsedToken =
+      token && token.includes('Bearer ') ? token.substring(7) : token;
 
-  if (!parsedToken) {
-    throw new ApiError('Auth token is not supplied', 400);
+    if (!parsedToken) {
+      throw new ApiError('Auth token is not supplied', 400);
+    }
+
+    const userId = await decodeToken(parsedToken);
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      throw new ApiError('User not found, invalid auth token', 400);
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    next(err);
   }
+};
 
-  const userId = await decodeToken(parsedToken);
-  const user = await User.findByPk(userId);
-
-  if (!user) {
-    throw new ApiError('User not found, invalid auth token', 400);
+/**
+ * Authorization middleware
+ * @param {Number} index Roles array index
+ */
+const authorization = (...indexes) => (req, res, next) => {
+  if (!Array.from(indexes).includes(req.user.role)) {
+    next(
+      new ApiError(
+        'You do not have the necessary permissions to execute this action',
+        403
+      )
+    );
   }
-
-  req.user = user;
   next();
 };
 
@@ -60,4 +80,5 @@ module.exports = {
   authentication,
   signToken,
   decodeToken,
+  authorization,
 };
