@@ -50,6 +50,7 @@ cd memmo_back
 
 3. Set your environment variables
 
+Rename docker-compose.yml.example as docker-compose.yml
 Open docker-compose.yml and fill the next fields
 
 - `TWILIO_ACCOUNT_SID`
@@ -63,8 +64,7 @@ See [Twilio Account Settings](#twilio-account-settings) to locate the necessary 
 
 Finally, create a firebase project and a service account [More info](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), download the JSON key and follow the next steps:
 
-- Move the downloaded file to the root folder and rename it as `service_account.json`
-- Fill the field `FIREBASE_PROJECT_ID`with the firebase project id
+- Fill each one `FIREBASE` field at docker-compose.yml with the service_account.json variables
 
 4. Run the application
 

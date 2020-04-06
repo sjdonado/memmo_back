@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "job:interactions": "node src/jobs/updateInteractions.js"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^8.10.0",
-    "geofire": "^5.0.1",
+    "geofirestore": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "pg": "^8.0.0",

@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const GeoFire = require('geofire');
+const { GeoFirestore } = require('geofirestore');
 
 const { firebase } = require('../config');
 
@@ -8,19 +8,15 @@ admin.initializeApp({
   credential: admin.credential.cert(firebase),
 });
 
-const db = admin.firestore();
-db.settings({ timestampsInSnapshots: true });
+const firestore = admin.firestore();
+firestore.settings({ timestampsInSnapshots: true });
 
-const Coordinate = db.collection('coordinates');
-
-const getDistance = (userLocation, location) =>
-  GeoFire.distance(
-    [userLocation.lat, userLocation.lng],
-    [location.lat, location.lng]
-  ) * 1000;
+const geofirestore = new GeoFirestore(firestore);
+const coordinatesCollection = firestore.collection('coordinates');
+const geocollection = geofirestore.collection('coordinates');
 
 module.exports = {
-  db,
-  Coordinate,
-  getDistance,
+  firestore,
+  geocollection,
+  coordinatesCollection,
 };
